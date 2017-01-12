@@ -1,9 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Period Calendar</string>
     <string name="menstruation_length_label">Menstruation length</string>
-    <string name="period_length_label">Period length</string>
-    <string name="button_plus_label">+</string>
-    <string name="button_minus_label">-</string>
     <string name="last_period_date_label">Last period date</string>
     <string name="pick_last_period_date">Set last period date</string>
 </resources>

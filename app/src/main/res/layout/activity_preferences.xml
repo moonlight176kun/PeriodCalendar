@@ -10,4 +10,106 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="pl.mchtr.piorkowski.periodcalendar.PreferencesActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--menstruation length row-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/menstruation_length_label"
+                android:layout_weight="2"/>
+
+            <EditText
+                android:id="@+id/menstruation_length_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/button_plus_label"
+                android:onClick="menstruationLengthPlusOne"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/button_minus_label"
+                android:onClick="menstruationLengthMinusOne"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!--period length row-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/period_length_label"
+                android:layout_weight="2"/>
+
+            <EditText
+                android:id="@+id/period_length_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/button_plus_label"
+                android:onClick="menstruationLengthPlusOne"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/button_minus_label"
+                android:onClick="menstruationLengthMinusOne"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!--last period row-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/last_period_date_label"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:id="@+id/last_period_date_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="datetime"
+                android:layout_weight="2"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pick_last_period_date"
+                android:onClick="showDatePickerDialog"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

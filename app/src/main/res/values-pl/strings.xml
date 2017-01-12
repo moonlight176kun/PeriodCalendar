@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kalendarz miesiączkowy</string>
+    <string name="menstruation_length_label">Długość menstruacji</string>
+    <string name="last_period_date_label">Last period date</string>
+    <string name="pick_last_period_date">Set last period date</string>
+</resources>
