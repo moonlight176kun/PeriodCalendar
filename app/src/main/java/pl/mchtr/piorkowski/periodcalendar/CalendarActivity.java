@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
 
@@ -17,9 +18,16 @@ public class CalendarActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(AppPreferences.SHARED_PREFERENCES_FILE, MODE_PRIVATE);
 
         if (!preferences.contains(AppPreferences.BASIC_USER_PREFERENCES_AVAILABLE)) {
-            Intent intent = new Intent(this, PreferencesActivity.class);
-            startActivity(intent);
+            startPreferencesActivity();
         }
+    }
 
+    private void startPreferencesActivity() {
+        Intent intent = new Intent(this, PreferencesActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToPreferences(View view) {
+        startPreferencesActivity();
     }
 }

@@ -6,7 +6,9 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.widget.DatePicker;
 
-import java.util.Calendar;
+import java.util.Date;
+
+import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
 
 /**
  * Fragment for DatePickerDialog handling.
@@ -14,13 +16,16 @@ import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
+    private String initialDateString;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
+        Date initialDate = AppPreferences.lastPeriodDate(initialDateString);
+        int year = initialDate.getYear();
+        int month = initialDate.getMonth();
+        int day = initialDate.getDay();
         DatePickerDialog pickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
+
         pickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
         return pickerDialog;
     }
@@ -29,5 +34,13 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         PreferencesActivity activity = (PreferencesActivity) getActivity();
         activity.lastPeriodDateSet(year, month, dayOfMonth);
+    }
+
+    public String getInitialDateString() {
+        return initialDateString;
+    }
+
+    public void setInitialDateString(String initialDateString) {
+        this.initialDateString = initialDateString;
     }
 }

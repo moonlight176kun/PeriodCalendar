@@ -13,7 +13,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/linearLayout"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <!--menstruation length row-->
         <LinearLayout
@@ -32,7 +35,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:enabled="false"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:inputType="number"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -66,20 +71,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:enabled="false"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:inputType="number"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/button_plus_label"
-                android:onClick="menstruationLengthPlusOne"
+                android:onClick="periodLengthPlusOne"
                 android:layout_weight="1"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/button_minus_label"
-                android:onClick="menstruationLengthMinusOne"
+                android:onClick="periodLengthMinusOne"
                 android:layout_weight="1"/>
         </LinearLayout>
 
@@ -93,13 +100,14 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="@string/last_period_date_label"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/last_period_date_value"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:inputType="datetime"
+                android:inputType="date"
+                android:enabled="false"
                 android:layout_weight="2"/>
 
             <Button
@@ -109,6 +117,41 @@
                 android:onClick="showDatePickerDialog"
                 android:layout_weight="1"/>
         </LinearLayout>
+
+        <Switch
+            android:text="@string/incoming_period_notification_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="32dp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/incoming_period_notification" />
+
+        <Switch
+            android:text="@string/fertile_days_notification_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="32dp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/fertile_days_notification" />
+
+        <Switch
+            android:text="@string/ovulation_notification_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="32dp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/ovulation_notification" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/update_preferences"
+            android:onClick="updatePreferences"
+            android:layout_gravity="center"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

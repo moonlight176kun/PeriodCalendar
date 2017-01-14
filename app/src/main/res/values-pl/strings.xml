@@ -4,4 +4,9 @@
     <string name="menstruation_length_label">Długość menstruacji</string>
     <string name="last_period_date_label">Last period date</string>
     <string name="pick_last_period_date">Set last period date</string>
+    <string name="incoming_period_notification_label">Incoming period notification</string>
+    <string name="fertile_days_notification_label">Fertile days notification</string>
+    <string name="ovulation_notification_label">Ovulation notification</string>
+    <string name="update_preferences">Update</string>
+    <string name="go_to_preferences">Preferences</string>
 </resources>
