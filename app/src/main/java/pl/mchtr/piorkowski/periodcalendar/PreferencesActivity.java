@@ -73,11 +73,10 @@ public class PreferencesActivity extends AppCompatActivity implements DatePicker
     }
 
     public void showDatePickerDialog(View view) {
+        EditText lastPeriodDayValue = (EditText) findViewById(R.id.last_period_date_value);
         DatePickerFragment newFragment = new DatePickerFragment();
-        SharedPreferences preferences = getSharedPreferences(AppPreferences.SHARED_PREFERENCES_FILE, MODE_PRIVATE);
-        String dateString = preferences.getString(AppPreferences.LAST_PERIOD_DATE_KEY,
-                AppPreferences.defaultLastPeriodDate());
-        newFragment.setInitiallySelectedDate(AppPreferences.convertStringToDate(dateString, new LocalDate()));
+        newFragment.setInitiallySelectedDate(AppPreferences.convertStringToDate(lastPeriodDayValue.getText().toString(),
+                new LocalDate()));
         newFragment.show(getFragmentManager(), AppPreferences.DATE_PICKER_DIALOG_TAG);
     }
 
