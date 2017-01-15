@@ -10,13 +10,13 @@ import android.widget.Switch;
 
 import com.google.common.base.Optional;
 
-import java.util.Date;
+import org.joda.time.LocalDate;
 
 import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
 import pl.mchtr.piorkowski.periodcalendar.util.OptionalUtil;
 import pl.mchtr.piorkowski.periodcalendar.validator.IntegerWithinRange;
 
-public class PreferencesActivity extends AppCompatActivity {
+public class PreferencesActivity extends AppCompatActivity implements DatePickerFragment.OnDateSetListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,16 +75,16 @@ public class PreferencesActivity extends AppCompatActivity {
     public void showDatePickerDialog(View view) {
         DatePickerFragment newFragment = new DatePickerFragment();
         SharedPreferences preferences = getSharedPreferences(AppPreferences.SHARED_PREFERENCES_FILE, MODE_PRIVATE);
-        String lastPeriodDateString = preferences.getString(AppPreferences.LAST_PERIOD_DATE_KEY,
+        String dateString = preferences.getString(AppPreferences.LAST_PERIOD_DATE_KEY,
                 AppPreferences.defaultLastPeriodDate());
-        newFragment.setInitialDateString(lastPeriodDateString);
+        newFragment.setInitiallySelectedDate(AppPreferences.convertStringToDate(dateString, new LocalDate()));
         newFragment.show(getFragmentManager(), AppPreferences.DATE_PICKER_DIALOG_TAG);
     }
 
-    public void lastPeriodDateSet(int year, int month, int day) {
-        Date date = new Date(year, month, day);
-        EditText lastPeriodDate = (EditText) findViewById(R.id.last_period_date_value);
-        lastPeriodDate.setText(AppPreferences.lastPeriodDate(date));
+    @Override
+    public void onDateSet(LocalDate selectedDate) {
+        EditText lastPeriodValue = (EditText) findViewById(R.id.last_period_date_value);
+        lastPeriodValue.setText(AppPreferences.convertDateToString(selectedDate));
     }
 
     private void changeNumericalFieldValueByDiff(int fieldId, int diff) {

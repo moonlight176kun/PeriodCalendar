@@ -1,5 +1,7 @@
 package pl.mchtr.piorkowski.periodcalendar.util;
 
+import org.joda.time.LocalDate;
+
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -21,24 +23,19 @@ public final class AppPreferences {
     public static final String LAST_PERIOD_DATE_KEY = APPLICATION_PREFIX + "last_period_date";
 
     public static String defaultLastPeriodDate() {
-        return lastPeriodDate(new Date());
+        return convertDateToString(new LocalDate());
     }
 
-    public static String lastPeriodDate(Date date) {
-        return DateFormat.getDateInstance(DateFormat.SHORT).format(date);
+    public static String convertDateToString(LocalDate localDate) {
+        return DateFormat.getDateInstance(DateFormat.SHORT).format(localDate.toDate());
+    }
+
+    public static LocalDate convertStringToDate(String dateString, LocalDate defaultDate) {
+        Date d = OptionalUtil.parseDate(dateString, DateFormat.getDateInstance(DateFormat.SHORT)).orNull();
+        return d != null ? new LocalDate(d) : defaultDate;
     }
 
     public static final String INCOMING_PERIOD_NOTIFICATION_KEY = APPLICATION_PREFIX + "incoming_period_notification";
     public static final String FERTILE_DAYS_NOTIFICATION_KEY = APPLICATION_PREFIX + "fertile_days_notification";
     public static final String OVULATION_NOTIFICATION_KEY = APPLICATION_PREFIX + "ovulation_notification";
-
-    public static Date lastPeriodDate(String dateString) {
-        return lastPeriodDate(dateString, new Date());
-    }
-
-    public static Date lastPeriodDate(String dateString, Date defaultDate) {
-        return OptionalUtil.parseDate(dateString, DateFormat.getDateInstance(DateFormat.SHORT)).or(defaultDate);
-    }
-
-
 }

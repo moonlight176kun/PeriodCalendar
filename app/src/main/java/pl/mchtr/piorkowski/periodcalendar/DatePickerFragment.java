@@ -6,9 +6,9 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.widget.DatePicker;
 
-import java.util.Date;
+import org.joda.time.LocalDate;
 
-import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
+import java.util.Calendar;
 
 /**
  * Fragment for DatePickerDialog handling.
@@ -16,31 +16,31 @@ import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
-    private String initialDateString;
+    private LocalDate initiallySelectedDate;
+
+    public interface OnDateSetListener {
+        void onDateSet(LocalDate selectedDate);
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Date initialDate = AppPreferences.lastPeriodDate(initialDateString);
-        int year = initialDate.getYear();
-        int month = initialDate.getMonth();
-        int day = initialDate.getDay();
-        DatePickerDialog pickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
-
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(initiallySelectedDate.toDate());
+        DatePickerDialog pickerDialog = new DatePickerDialog(getActivity(), this,
+                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         pickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
         return pickerDialog;
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        PreferencesActivity activity = (PreferencesActivity) getActivity();
-        activity.lastPeriodDateSet(year, month, dayOfMonth);
+        OnDateSetListener activity = (OnDateSetListener) getActivity();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1900 + year, month, dayOfMonth);
+        activity.onDateSet(new LocalDate(calendar.getTime()));
     }
 
-    public String getInitialDateString() {
-        return initialDateString;
-    }
-
-    public void setInitialDateString(String initialDateString) {
-        this.initialDateString = initialDateString;
+    public void setInitiallySelectedDate(LocalDate initiallySelectedDate) {
+        this.initiallySelectedDate = initiallySelectedDate;
     }
 }
