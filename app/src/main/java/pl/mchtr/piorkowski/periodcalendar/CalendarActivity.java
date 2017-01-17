@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CalendarView;
 
 import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
 
@@ -20,6 +21,10 @@ public class CalendarActivity extends AppCompatActivity {
         if (!preferences.contains(AppPreferences.BASIC_USER_PREFERENCES_AVAILABLE)) {
             startPreferencesActivity();
         }
+
+        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
+
+
     }
 
     private void startPreferencesActivity() {

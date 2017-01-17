@@ -1,6 +1,5 @@
 package pl.mchtr.piorkowski.periodcalendar;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -110,8 +109,7 @@ public class PreferencesActivity extends AppCompatActivity implements DatePicker
         editor.putBoolean(AppPreferences.BASIC_USER_PREFERENCES_AVAILABLE, true);
         editor.apply();
 
-        Intent intent = new Intent(this, CalendarActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     public void savePreferenceStringValue(int viewId, String preferenceKey, SharedPreferences.Editor editor) {
