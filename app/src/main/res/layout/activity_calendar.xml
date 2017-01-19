@@ -15,15 +15,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!" />
-
-        <CalendarView
+        <com.stacktips.view.CustomCalendarView
+            android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/calendarView"/>
+            android:background="@color/white" />
 
         <Button
             android:layout_width="wrap_content"

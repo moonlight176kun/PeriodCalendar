@@ -28,8 +28,8 @@ public class PreferencesActivity extends AppCompatActivity implements DatePicker
         Switch fertileDaysNotification = (Switch) findViewById(R.id.fertile_days_notification);
         Switch ovulationNotification = (Switch) findViewById(R.id.ovulation_notification);
 
-        menstruationLength.addTextChangedListener(new IntegerWithinRange(menstruationLength, 8, 60));
-        periodLength.addTextChangedListener(new IntegerWithinRange(periodLength, 5, 12));
+        menstruationLength.addTextChangedListener(new IntegerWithinRange(menstruationLength, 1, 12));
+        periodLength.addTextChangedListener(new IntegerWithinRange(periodLength, 18, 60));
 
         setFieldValue(menstruationLength, AppPreferences.MENSTRUATION_LENGTH_KEY,
                 AppPreferences.DEFAULT_MENSTRUATION_LENGTH);
