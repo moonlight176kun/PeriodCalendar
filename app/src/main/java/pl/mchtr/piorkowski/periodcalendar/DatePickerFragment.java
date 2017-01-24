@@ -36,7 +36,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         OnDateSetListener activity = (OnDateSetListener) getActivity();
-        Log.d(getClass().getSimpleName(), String.format("year %d month %d dayOfMonth %d"));
+        Log.d(getClass().getSimpleName(), String.format("year %d month %d dayOfMonth %d", year, month, dayOfMonth));
         Calendar calendar = Calendar.getInstance();
         calendar.set(1900 + year, month, dayOfMonth);
         activity.onDateSet(new LocalDate(calendar.getTime()));
