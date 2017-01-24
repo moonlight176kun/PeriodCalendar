@@ -60,6 +60,8 @@ public class CalendarActivity extends AppCompatActivity {
         public void decorate(DayView dayView) {
             LocalDate actualDate = new LocalDate(dayView.getDate());
 
+            dayView.setBackgroundColor(getResources().getColor(R.color.neutralBackground));
+
             if (periodDays.contains(actualDate)) {
                 dayView.setBackgroundColor(getResources().getColor(R.color.periodDayBackground));
             }

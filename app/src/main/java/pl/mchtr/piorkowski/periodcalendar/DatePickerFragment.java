@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.DatePicker;
 
 import org.joda.time.LocalDate;
@@ -35,6 +36,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         OnDateSetListener activity = (OnDateSetListener) getActivity();
+        Log.d(getClass().getSimpleName(), String.format("year %d month %d dayOfMonth %d"));
         Calendar calendar = Calendar.getInstance();
         calendar.set(1900 + year, month, dayOfMonth);
         activity.onDateSet(new LocalDate(calendar.getTime()));
