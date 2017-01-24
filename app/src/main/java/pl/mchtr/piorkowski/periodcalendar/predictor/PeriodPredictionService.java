@@ -12,6 +12,7 @@ import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.mchtr.piorkowski.periodcalendar.CalendarActivity;
 import pl.mchtr.piorkowski.periodcalendar.period_days.PeriodDaysBean;
 import pl.mchtr.piorkowski.periodcalendar.period_days.PeriodDaysManager;
 import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
@@ -63,6 +64,10 @@ public class PeriodPredictionService extends IntentService {
                 default:
                     throw new IllegalArgumentException("Unknown action name :\"" + action + "\"");
             }
+
+            CalendarActivity.periodDays = periodDaysManager.getHistoricPeriodDays();
+            CalendarActivity.fertileDays = periodDaysManager.getHistoricFertileDays();
+            CalendarActivity.ovulationDays = periodDaysManager.getHistoricOvulationDays();
         }
     }
 

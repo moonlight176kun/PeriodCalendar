@@ -22,6 +22,10 @@ import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
 
 public class CalendarActivity extends AppCompatActivity {
 
+    public static Set<LocalDate> periodDays = new HashSet<>();
+    public static Set<LocalDate> fertileDays = new HashSet<>();
+    public static Set<LocalDate> ovulationDays = new HashSet<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,21 +56,20 @@ public class CalendarActivity extends AppCompatActivity {
 
     private class SampleDayDecorator implements DayDecorator {
 
-        private final Set<LocalDate> periodDays;
-
-        private SampleDayDecorator() {
-            periodDays = new HashSet<>();
-            periodDays.add(new LocalDate());
-        }
-
-        private SampleDayDecorator(Set<LocalDate> periodDays) {
-            this.periodDays = periodDays;
-        }
-
         @Override
         public void decorate(DayView dayView) {
-            if (periodDays.contains(new LocalDate(dayView.getDate()))) {
+            LocalDate actualDate = new LocalDate(dayView.getDate());
+
+            if (periodDays.contains(actualDate)) {
                 dayView.setBackgroundColor(getResources().getColor(R.color.periodDayBackground));
+            }
+
+            if (fertileDays.contains(actualDate)) {
+                dayView.setBackgroundColor(getResources().getColor(R.color.fertileDayBackground));
+            }
+
+            if (ovulationDays.contains(actualDate)) {
+                dayView.setBackgroundColor(getResources().getColor(R.color.ovulationDayBackground));
             }
         }
     }

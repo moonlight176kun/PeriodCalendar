@@ -119,7 +119,6 @@ public class PreferencesActivity extends AppCompatActivity implements DatePicker
         }
 
         PeriodPredictionService.recalculateOnDemand(this);
-
         finish();
     }
 

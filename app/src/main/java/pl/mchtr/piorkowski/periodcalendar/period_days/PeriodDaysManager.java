@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.common.base.Optional;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.joda.time.LocalDate;
@@ -17,10 +18,16 @@ import java.util.List;
 import java.util.Set;
 
 import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
+import pl.mchtr.piorkowski.periodcalendar.util.LocalDateSerializer;
 
 public class PeriodDaysManager {
+
     private static final String TAG = "PeriodDaysManager";
-    private static final Gson GSON = new Gson();
+
+    private static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
+            .create();
+
     private static final Type PERIOD_DAYS_GSON_TYPE = new TypeToken<ArrayList<PeriodDaysBean>>(){}.getType();
     public static final String EMPTY_LIST = "[]";
 
