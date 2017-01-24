@@ -11,11 +11,14 @@ import com.google.common.base.Optional;
 
 import org.joda.time.LocalDate;
 
+import pl.mchtr.piorkowski.periodcalendar.predictor.PeriodPredictionService;
 import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
 import pl.mchtr.piorkowski.periodcalendar.util.OptionalUtil;
 import pl.mchtr.piorkowski.periodcalendar.validator.IntegerWithinRange;
 
 public class PreferencesActivity extends AppCompatActivity implements DatePickerFragment.OnDateSetListener {
+
+    private final PeriodRecalculateReceiver recalculateReceiver = new PeriodRecalculateReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +35,9 @@ public class PreferencesActivity extends AppCompatActivity implements DatePicker
         periodLength.addTextChangedListener(new IntegerWithinRange(periodLength, 18, 60));
 
         setFieldValue(menstruationLength, AppPreferences.MENSTRUATION_LENGTH_KEY,
-                AppPreferences.DEFAULT_MENSTRUATION_LENGTH);
+                String.valueOf(AppPreferences.DEFAULT_MENSTRUATION_LENGTH));
         setFieldValue(periodLength, AppPreferences.PERIOD_LENGTH_KEY,
-                AppPreferences.DEFAULT_PERIOD_LENGTH);
+                String.valueOf(AppPreferences.DEFAULT_PERIOD_LENGTH));
         setFieldValue(lastPeriodDate, AppPreferences.LAST_PERIOD_DATE_KEY, AppPreferences.defaultLastPeriodDate());
         setFieldValue(incomingPeriodNotification, AppPreferences.INCOMING_PERIOD_NOTIFICATION_KEY);
         setFieldValue(fertileDaysNotification, AppPreferences.FERTILE_DAYS_NOTIFICATION_KEY);
@@ -95,6 +98,8 @@ public class PreferencesActivity extends AppCompatActivity implements DatePicker
 
     public void updatePreferences(View view) {
         SharedPreferences preferences = getSharedPreferences(AppPreferences.SHARED_PREFERENCES_FILE, MODE_PRIVATE);
+        boolean userPreferencesAvailable = preferences
+                .getBoolean(AppPreferences.BASIC_USER_PREFERENCES_AVAILABLE, false);
         SharedPreferences.Editor editor = preferences.edit();
         savePreferenceStringValue(R.id.menstruation_length_value, AppPreferences.MENSTRUATION_LENGTH_KEY, editor);
         savePreferenceStringValue(R.id.period_length_value, AppPreferences.PERIOD_LENGTH_KEY, editor);
@@ -108,6 +113,12 @@ public class PreferencesActivity extends AppCompatActivity implements DatePicker
 
         editor.putBoolean(AppPreferences.BASIC_USER_PREFERENCES_AVAILABLE, true);
         editor.apply();
+
+        if (!userPreferencesAvailable) {
+            recalculateReceiver.setPredictionService(this);
+        }
+
+        PeriodPredictionService.recalculateOnDemand(this);
 
         finish();
     }

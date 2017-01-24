@@ -12,14 +12,14 @@ public final class AppPreferences {
 
     private AppPreferences() { }
 
-    private static final String APPLICATION_PREFIX = "pl.mchtr.piorkowski.periodcalendar.";
+    public static final String APPLICATION_PREFIX = "pl.mchtr.piorkowski.periodcalendar.";
     public static final String SHARED_PREFERENCES_FILE = APPLICATION_PREFIX + "shared_preferences";
     public static final String BASIC_USER_PREFERENCES_AVAILABLE = "basic_user_preferences_available";
     public static final String DATE_PICKER_DIALOG_TAG = APPLICATION_PREFIX + "date_picker_dialog";
     public static final String MENSTRUATION_LENGTH_KEY = APPLICATION_PREFIX + "menstruation_length";
-    public static final String DEFAULT_MENSTRUATION_LENGTH = "5";
+    public static final int DEFAULT_MENSTRUATION_LENGTH = 5;
     public static final String PERIOD_LENGTH_KEY = APPLICATION_PREFIX + "period_length";
-    public static final String DEFAULT_PERIOD_LENGTH = "28";
+    public static final int DEFAULT_PERIOD_LENGTH = 28;
     public static final String LAST_PERIOD_DATE_KEY = APPLICATION_PREFIX + "last_period_date";
 
     public static String defaultLastPeriodDate() {
@@ -38,4 +38,5 @@ public final class AppPreferences {
     public static final String INCOMING_PERIOD_NOTIFICATION_KEY = APPLICATION_PREFIX + "incoming_period_notification";
     public static final String FERTILE_DAYS_NOTIFICATION_KEY = APPLICATION_PREFIX + "fertile_days_notification";
     public static final String OVULATION_NOTIFICATION_KEY = APPLICATION_PREFIX + "ovulation_notification";
+    public static final String PERIOD_DAYS_BEANS_LIST_KEY = APPLICATION_PREFIX + "period_days_beans_list";
 }
