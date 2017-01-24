@@ -87,11 +87,13 @@ public class PeriodDaysManager {
     }
 
     public int getPeriodLength() {
-        return preferences.getInt(AppPreferences.PERIOD_LENGTH_KEY, AppPreferences.DEFAULT_PERIOD_LENGTH);
+        return Integer.parseInt(preferences.getString(AppPreferences.PERIOD_LENGTH_KEY,
+                AppPreferences.DEFAULT_PERIOD_LENGTH));
     }
 
     public int getMenstruationLength() {
-        return preferences.getInt(AppPreferences.MENSTRUATION_LENGTH_KEY, AppPreferences.DEFAULT_MENSTRUATION_LENGTH);
+        return Integer.parseInt(preferences.getString(AppPreferences.MENSTRUATION_LENGTH_KEY,
+                AppPreferences.DEFAULT_MENSTRUATION_LENGTH));
     }
 
     public Optional<LocalDate> getLastPeriodDate() {

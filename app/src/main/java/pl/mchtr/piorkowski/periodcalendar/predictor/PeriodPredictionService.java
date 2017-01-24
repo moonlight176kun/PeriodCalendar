@@ -25,11 +25,16 @@ public class PeriodPredictionService extends IntentService {
     public static final String ACTION_SCHEDULED_RECALCULATION
             = AppPreferences.APPLICATION_PREFIX + "action.SCHEDULED_RECALCULATION";
 
-    private final PeriodDaysManager periodDaysManager;
+    private PeriodDaysManager periodDaysManager;
 
     public PeriodPredictionService() {
         super("PeriodPredictionService");
-        this.periodDaysManager = new PeriodDaysManager(this);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        this.periodDaysManager = new PeriodDaysManager(getApplicationContext());
     }
 
     public static void recalculateOnDemand(Context context) {

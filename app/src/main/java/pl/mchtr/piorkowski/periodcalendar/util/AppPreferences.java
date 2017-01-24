@@ -17,9 +17,9 @@ public final class AppPreferences {
     public static final String BASIC_USER_PREFERENCES_AVAILABLE = "basic_user_preferences_available";
     public static final String DATE_PICKER_DIALOG_TAG = APPLICATION_PREFIX + "date_picker_dialog";
     public static final String MENSTRUATION_LENGTH_KEY = APPLICATION_PREFIX + "menstruation_length";
-    public static final int DEFAULT_MENSTRUATION_LENGTH = 5;
+    public static final String DEFAULT_MENSTRUATION_LENGTH = "5";
     public static final String PERIOD_LENGTH_KEY = APPLICATION_PREFIX + "period_length";
-    public static final int DEFAULT_PERIOD_LENGTH = 28;
+    public static final String DEFAULT_PERIOD_LENGTH = "28";
     public static final String LAST_PERIOD_DATE_KEY = APPLICATION_PREFIX + "last_period_date";
 
     public static String defaultLastPeriodDate() {
