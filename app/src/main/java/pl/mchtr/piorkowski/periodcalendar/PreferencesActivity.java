@@ -11,7 +11,8 @@ import com.google.common.base.Optional;
 
 import org.joda.time.LocalDate;
 
-import pl.mchtr.piorkowski.periodcalendar.predictor.PeriodPredictionService;
+import pl.mchtr.piorkowski.periodcalendar.period_days.PeriodDaysManager;
+import pl.mchtr.piorkowski.periodcalendar.predictor.PeriodCalculator;
 import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
 import pl.mchtr.piorkowski.periodcalendar.util.OptionalUtil;
 import pl.mchtr.piorkowski.periodcalendar.validator.IntegerWithinRange;
@@ -118,7 +119,7 @@ public class PreferencesActivity extends AppCompatActivity implements DatePicker
             recalculateReceiver.setPredictionService(this);
         }
 
-        PeriodPredictionService.recalculateOnDemand(this);
+        new PeriodCalculator(new PeriodDaysManager(this)).calculate();
         finish();
     }
 

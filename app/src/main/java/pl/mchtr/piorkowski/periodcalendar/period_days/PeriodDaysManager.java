@@ -31,14 +31,18 @@ public class PeriodDaysManager {
     private static final Type PERIOD_DAYS_GSON_TYPE = new TypeToken<ArrayList<PeriodDaysBean>>(){}.getType();
     public static final String EMPTY_LIST = "[]";
 
-    private final SharedPreferences preferences;
+    private final Context ctx;
 
     public PeriodDaysManager(Context ctx) {
-        this.preferences = ctx.getSharedPreferences(AppPreferences.SHARED_PREFERENCES_FILE, Context.MODE_PRIVATE);
+        this.ctx = ctx;
+    }
+
+    private SharedPreferences getPreferences() {
+        return ctx.getSharedPreferences(AppPreferences.SHARED_PREFERENCES_FILE, Context.MODE_PRIVATE);
     }
 
     public List<PeriodDaysBean> getAllPeriodDaysBeans() {
-        String periodDaysBeanString = preferences.getString(AppPreferences.PERIOD_DAYS_BEANS_LIST_KEY, EMPTY_LIST);
+        String periodDaysBeanString = getPreferences().getString(AppPreferences.PERIOD_DAYS_BEANS_LIST_KEY, EMPTY_LIST);
         return GSON.fromJson(periodDaysBeanString, PERIOD_DAYS_GSON_TYPE);
     }
 
@@ -94,17 +98,17 @@ public class PeriodDaysManager {
     }
 
     public int getPeriodLength() {
-        return Integer.parseInt(preferences.getString(AppPreferences.PERIOD_LENGTH_KEY,
+        return Integer.parseInt(getPreferences().getString(AppPreferences.PERIOD_LENGTH_KEY,
                 AppPreferences.DEFAULT_PERIOD_LENGTH));
     }
 
     public int getMenstruationLength() {
-        return Integer.parseInt(preferences.getString(AppPreferences.MENSTRUATION_LENGTH_KEY,
+        return Integer.parseInt(getPreferences().getString(AppPreferences.MENSTRUATION_LENGTH_KEY,
                 AppPreferences.DEFAULT_MENSTRUATION_LENGTH));
     }
 
     public Optional<LocalDate> getLastPeriodDate() {
-        String stringDate = preferences.getString(AppPreferences.LAST_PERIOD_DATE_KEY, null);
+        String stringDate = getPreferences().getString(AppPreferences.LAST_PERIOD_DATE_KEY, null);
         if (stringDate == null) {
             return Optional.absent();
         }
@@ -117,7 +121,7 @@ public class PeriodDaysManager {
         list.add(periodDaysBean);
         String listString = GSON.toJson(list, PERIOD_DAYS_GSON_TYPE);
         Log.i(TAG, String.format("Adding new period days bean at the end of list: %s", listString));
-        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor editor = getPreferences().edit();
         editor.putString(AppPreferences.PERIOD_DAYS_BEANS_LIST_KEY, listString);
         editor.apply();
     }
@@ -130,7 +134,7 @@ public class PeriodDaysManager {
         list.add(updatedPeriodDaysBean);
         String listString = GSON.toJson(list, PERIOD_DAYS_GSON_TYPE);
         Log.i(TAG, String.format("Updating new period days bean at then end of list: %s", listString));
-        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor editor = getPreferences().edit();
         editor.putString(AppPreferences.PERIOD_DAYS_BEANS_LIST_KEY, listString);
         editor.apply();
     }
@@ -138,7 +142,7 @@ public class PeriodDaysManager {
     public void updateLastPeriodDate(LocalDate updatedLastPeriodDate) {
         String stringDate = AppPreferences.convertDateToString(updatedLastPeriodDate);
         Log.i(TAG, String.format("Updating last period day to: %s", stringDate));
-        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor editor = getPreferences().edit();
         editor.putString(AppPreferences.LAST_PERIOD_DATE_KEY, stringDate);
         editor.apply();
     }

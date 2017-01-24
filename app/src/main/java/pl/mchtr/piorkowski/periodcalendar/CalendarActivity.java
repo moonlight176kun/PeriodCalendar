@@ -18,18 +18,23 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import pl.mchtr.piorkowski.periodcalendar.period_days.PeriodDaysManager;
 import pl.mchtr.piorkowski.periodcalendar.util.AppPreferences;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    public static Set<LocalDate> periodDays = new HashSet<>();
-    public static Set<LocalDate> fertileDays = new HashSet<>();
-    public static Set<LocalDate> ovulationDays = new HashSet<>();
+    public static final int GATHER_NEW_PREFERENCES = 1;
+    private static Set<LocalDate> periodDays = new HashSet<>();
+    private static Set<LocalDate> fertileDays = new HashSet<>();
+    private static Set<LocalDate> ovulationDays = new HashSet<>();
+
+    private PeriodDaysManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+        manager = new PeriodDaysManager(this);
 
         SharedPreferences preferences = getSharedPreferences(AppPreferences.SHARED_PREFERENCES_FILE, MODE_PRIVATE);
 
@@ -37,6 +42,10 @@ public class CalendarActivity extends AppCompatActivity {
             startPreferencesActivity();
         }
 
+        refreshCalendar();
+    }
+
+    private void refreshCalendar() {
         CustomCalendarView calendarView = (CustomCalendarView) findViewById(R.id.calendarView);
         Calendar currentCalendar = Calendar.getInstance(Locale.getDefault());
         calendarView.setFirstDayOfWeek(Calendar.MONDAY);
@@ -45,9 +54,19 @@ public class CalendarActivity extends AppCompatActivity {
         calendarView.refreshCalendar(currentCalendar);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == GATHER_NEW_PREFERENCES) {
+            periodDays = manager.getHistoricPeriodDays();
+            fertileDays = manager.getHistoricFertileDays();
+            ovulationDays = manager.getHistoricOvulationDays();
+            refreshCalendar();
+        }
+    }
+
     private void startPreferencesActivity() {
         Intent intent = new Intent(this, PreferencesActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, GATHER_NEW_PREFERENCES);
     }
 
     public void goToPreferences(View view) {
