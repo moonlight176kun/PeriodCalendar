@@ -61,20 +61,6 @@ public class PeriodPredictionService extends IntentService {
         }
     }
 
-    /**
-     *
-     * 4 możliości :
-     *
-     * 1. jest nie skończony przyszły okres miesiączkowy – wtedy aktualizujemy zgodnie z ustawieniami usera
-     * informacje o tym przyszłym okresie.
-     *
-     * 2. nie ma wyznaczonego przyszego okresu miesięczkowego - aktualizujemy starą datę ostatniej miesiaczki oraz
-     * wyznaczmy kolejną.
-     *
-     * 3. nie ma jeszcze wyznaczonego żadnego przyszego okresu miesiączkowego - wyznaczamy na podstawie infrmacji w
-     * ustawieniach.
-     *
-     */
     private void handleOnDemandRecalculation() {
         Optional<PeriodDaysBean> beanOpt = periodDaysManager.getLastPeriodDaysBean();
         if (!beanOpt.isPresent()) {
