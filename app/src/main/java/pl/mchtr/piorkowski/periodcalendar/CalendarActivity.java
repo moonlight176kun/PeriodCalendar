@@ -35,6 +35,9 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         manager = new PeriodDaysManager(this);
+        periodDays = manager.getHistoricPeriodDays();
+        fertileDays = manager.getHistoricFertileDays();
+        ovulationDays = manager.getHistoricOvulationDays();
 
         SharedPreferences preferences = getSharedPreferences(AppPreferences.SHARED_PREFERENCES_FILE, MODE_PRIVATE);
 

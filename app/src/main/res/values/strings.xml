@@ -11,4 +11,5 @@
     <string name="ovulation_notification_label">Ovulation notification</string>
     <string name="update_preferences">Update</string>
     <string name="go_to_preferences">Preferences</string>
+    <string name="clear_calendar">Clear calendar</string>
 </resources>

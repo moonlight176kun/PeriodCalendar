@@ -132,4 +132,8 @@ public class PreferencesActivity extends AppCompatActivity implements DatePicker
         Switch s = (Switch) findViewById(viewId);
         editor.putBoolean(preferenceKey, s.isChecked());
     }
+
+    public void clearPeriodCalendar(View view) {
+        new PeriodDaysManager(this).clearPeriodDates();
+    }
 }

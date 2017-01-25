@@ -13,6 +13,7 @@ import org.joda.time.LocalDate;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -116,27 +117,16 @@ public class PeriodDaysManager {
         return Optional.fromNullable(AppPreferences.convertStringToDate(stringDate, null));
     }
 
-    public void addNewPeriodDaysBean(PeriodDaysBean periodDaysBean) {
-        List<PeriodDaysBean> list = getAllPeriodDaysBeans();
-        list.add(periodDaysBean);
-        String listString = GSON.toJson(list, PERIOD_DAYS_GSON_TYPE);
-        Log.i(TAG, String.format("Adding new period days bean at the end of list: %s", listString));
+    public void updateAllPeriodBeans(List<PeriodDaysBean> periodDaysBeans) {
+        String listString = GSON.toJson(periodDaysBeans, PERIOD_DAYS_GSON_TYPE);
+        Log.i(TAG, String.format("New period days bean list: %s", listString));
         SharedPreferences.Editor editor = getPreferences().edit();
         editor.putString(AppPreferences.PERIOD_DAYS_BEANS_LIST_KEY, listString);
-        editor.apply();
+        editor.commit();
     }
 
-    public void updateNextPeriodDaysBean(PeriodDaysBean updatedPeriodDaysBean) {
-        List<PeriodDaysBean> list = getAllPeriodDaysBeans();
-        if (!list.isEmpty()) {
-            list.remove(list.size() - 1);
-        }
-        list.add(updatedPeriodDaysBean);
-        String listString = GSON.toJson(list, PERIOD_DAYS_GSON_TYPE);
-        Log.i(TAG, String.format("Updating new period days bean at then end of list: %s", listString));
-        SharedPreferences.Editor editor = getPreferences().edit();
-        editor.putString(AppPreferences.PERIOD_DAYS_BEANS_LIST_KEY, listString);
-        editor.apply();
+    public void clearPeriodDates() {
+        updateAllPeriodBeans(Collections.<PeriodDaysBean>emptyList());
     }
 
     public void updateLastPeriodDate(LocalDate updatedLastPeriodDate) {
@@ -144,6 +134,6 @@ public class PeriodDaysManager {
         Log.i(TAG, String.format("Updating last period day to: %s", stringDate));
         SharedPreferences.Editor editor = getPreferences().edit();
         editor.putString(AppPreferences.LAST_PERIOD_DATE_KEY, stringDate);
-        editor.apply();
+        editor.commit();
     }
 }

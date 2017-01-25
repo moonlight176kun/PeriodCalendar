@@ -3,6 +3,9 @@ package pl.mchtr.piorkowski.periodcalendar.predictor;
 import android.util.Log;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 import org.joda.time.LocalDate;
 
@@ -23,72 +26,99 @@ public class PeriodCalculator {
     }
 
     public void calculate() {
-        Optional<PeriodDaysBean> beanOpt = manager.getLastPeriodDaysBean();
-        if (!beanOpt.isPresent()) {
-            PeriodDaysBean bean = recalculateNewPeriodDaysFromSettings();
-            manager.addNewPeriodDaysBean(bean);
-            return;
+        List<PeriodDaysBean> allBeans = manager.getAllPeriodDaysBeans();
+
+        if (allBeans.size() == 1) {
+            throw new IllegalStateException("Illegal state, there have to be at least two periods!");
         }
 
-        PeriodDaysBean lastPeriodDays = beanOpt.get();
+        final LocalDate lastPeriodDate = actualLastPeriodDate();
+        allBeans = Lists.newArrayList(Iterables.filter(allBeans, new Predicate<PeriodDaysBean>() {
+            @Override
+            public boolean apply(PeriodDaysBean periodDaysBean) {
+                return !periodDaysBean.getEarliestDate().isAfter(lastPeriodDate) &&
+                        !periodDaysBean.getLatestDate().isAfter(lastPeriodDate);
+            }
+        }));
+
+
+        allBeans.addAll(computeAllPeriodDaysSinceLastPeriod(lastPeriodDate));
+        PeriodDaysBean nextPeriod = allBeans.get(allBeans.size() - 1);
         LocalDate now = new LocalDate();
 
-        if (now.isAfter(lastPeriodDays.getLatestDate())) {
-            LocalDate newLastPeriodDate = lastPeriodDays.getPeriodDays().get(0);
-            PeriodDaysBean bean = recalculateNewPeriodDays(newLastPeriodDate);
-            manager.updateLastPeriodDate(newLastPeriodDate);
-            manager.addNewPeriodDaysBean(bean);
+        if (!now.isBefore(nextPeriod.getEarliestDate())) { // new period start
+            LocalDate currentPeriodStart = nextPeriod.getPeriodDays().get(0);
+            manager.updateLastPeriodDate(currentPeriodStart);
+            allBeans.addAll(computeAllPeriodDaysSinceLastPeriod(currentPeriodStart));
         } else {
-            PeriodDaysBean bean = recalculateNewPeriodDaysFromSettings();
-            manager.updateNextPeriodDaysBean(bean);
+            PeriodDaysBean actualPeriod = allBeans.get(allBeans.size() - 2);
+            manager.updateLastPeriodDate(actualPeriod.getPeriodDays().get(0));
         }
+
+        manager.updateAllPeriodBeans(allBeans);
     }
 
-    private PeriodDaysBean recalculateNewPeriodDaysFromSettings() {
+    private LocalDate actualLastPeriodDate() {
         Optional<LocalDate> lastPeriodDateOpt = manager.getLastPeriodDate();
         if (!lastPeriodDateOpt.isPresent()) {
             Log.e(TAG, "Recalculation on demand and no last period date found!");
             throw new IllegalStateException("Lack of last period date!");
         }
-
-        return recalculateNewPeriodDays(lastPeriodDateOpt.get());
+        return lastPeriodDateOpt.get();
     }
 
-    private PeriodDaysBean recalculateNewPeriodDays(LocalDate lastFirstPeriodDay) {
-        List<LocalDate> nextPeriodDays = getNextPeriodDays(lastFirstPeriodDay);
-        List<LocalDate> nextFertileDays = getNextFertileDays(nextPeriodDays.get(0));
-        LocalDate nextOvulationDay = getNextOvulationDay(nextFertileDays);
-        return new PeriodDaysBean(nextPeriodDays, nextFertileDays, nextOvulationDay);
+    private List<PeriodDaysBean> computeAllPeriodDaysSinceLastPeriod(LocalDate lastPeriodDate) {
+        List<PeriodDaysBean> list = new ArrayList<>();
+        LocalDate now = new LocalDate();
+        LocalDate lastPeriod = new LocalDate(lastPeriodDate);
+        int periodLength = manager.getPeriodLength();
+        PeriodDaysBean bean;
+
+        do  {
+            bean = computePeriodBean(lastPeriod);
+            list.add(bean);
+            lastPeriod = lastPeriod.plusDays(periodLength);
+        } while (!bean.getEarliestDate().isAfter(now));
+
+        return list;
     }
 
-    private List<LocalDate> getNextPeriodDays(LocalDate lastPeriodDay) {
-        List<LocalDate> periodDays = new ArrayList<>();
-        LocalDate periodDay = lastPeriodDay.plusDays(manager.getPeriodLength());
-        periodDays.add(periodDay);
+    private PeriodDaysBean computePeriodBean(LocalDate periodStart) {
+        List<LocalDate> periodDays = getPeriod(periodStart);
+        List<LocalDate> fertileDays = getFertile(periodStart);
+        LocalDate ovulationDay = getOvulation(fertileDays);
+
+        return new PeriodDaysBean(periodDays, fertileDays, ovulationDay);
+    }
+
+    private List<LocalDate> getPeriod(LocalDate periodStart) {
+        List<LocalDate> period = new ArrayList<>();
+        LocalDate periodDay = new LocalDate(periodStart);
+        period.add(periodDay);
 
         for (int i = 0; i < manager.getMenstruationLength() - 1; ++i) {
             periodDay = periodDay.plusDays(1);
-            periodDays.add(periodDay);
+            period.add(periodDay);
         }
 
-        return periodDays;
+        return period;
     }
 
-    private List<LocalDate> getNextFertileDays(LocalDate nextPeriodDate) {
+    private List<LocalDate> getFertile(LocalDate periodStart) {
         int diff = manager.getPeriodLength() - 20;
-        LocalDate fertileDay = nextPeriodDate.plusDays(diff);
-        List<LocalDate> fertileDays = new ArrayList<>();
-        fertileDays.add(fertileDay);
+        LocalDate fertileDay = periodStart.plusDays(diff);
+        List<LocalDate> fertile = new ArrayList<>();
+        fertile.add(fertileDay);
 
         for (int i = 0; i < 6; ++i) {
             fertileDay = fertileDay.plusDays(1);
-            fertileDays.add(fertileDay);
+            fertile.add(fertileDay);
         }
 
-        return fertileDays;
+        return fertile;
     }
 
-    private LocalDate getNextOvulationDay(List<LocalDate> fertileDays) {
+    private LocalDate getOvulation(List<LocalDate> fertileDays) {
         int size = fertileDays.size();
         if (size < 2) {
             return fertileDays.get(0);
