@@ -12,4 +12,10 @@
     <string name="update_preferences">Update</string>
     <string name="go_to_preferences">Preferences</string>
     <string name="clear_calendar">Clear calendar</string>
+    <string name="ovulation_notification_title">Ovulation day!</string>
+    <string name="ovulation_notification_text">Today is ovulation day</string>
+    <string name="fertile_notification_text">Today is fertile day</string>
+    <string name="fertile_notification_title">Fertile day!</string>
+    <string name="period_notification_title">Period day!</string>
+    <string name="period_notification_text">Period day!</string>
 </resources>

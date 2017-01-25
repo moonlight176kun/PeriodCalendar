@@ -10,6 +10,10 @@ import java.util.Date;
  */
 public final class AppPreferences {
 
+    public static final int PERIOD_NOTIFICATION_ID = 4321;
+    public static final int FERTILE_NOTIFICATION_ID = 4322;
+    public static final int OVULATION_NOTIFICATION_ID = 4323;
+
     private AppPreferences() { }
 
     public static final String APPLICATION_PREFIX = "pl.mchtr.piorkowski.periodcalendar.";
