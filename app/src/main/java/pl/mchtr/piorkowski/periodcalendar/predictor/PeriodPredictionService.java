@@ -104,7 +104,7 @@ public class PeriodPredictionService extends IntentService {
     private void sendNotification(NotificationManager manager, int notificationId,
                                   String contentTitle, String contentText) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle(contentTitle)
                 .setContentText(contentText);
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Calendario de periodos</string>
+    <string name="button_minus_label">-</string>
+    <string name="button_plus_label">+</string>
+    <string name="clear_calendar">Claro calendario</string>
+    <string name="fertile_days_notification_label">Notification de dias fertiles</string>
+    <string name="fertile_notification_text">Manana es dia fertil</string>
+    <string name="fertile_notification_title">Dia fertil</string>
+    <string name="go_to_preferences">Preferencias</string>
+    <string name="incoming_period_notification_label">Notification del periodo entrante</string>
+    <string name="last_period_date_label">Fecha del ultimo periodo</string>
+    <string name="menstruation_length_label">Longitud de la menstruacion</string>
+    <string name="ovulation_notification_label">Notification de Ovulacion</string>
+    <string name="ovulation_notification_text">Manana es el dia de la ovulacion</string>
+    <string name="ovulation_notification_title">Dia de ovulacion</string>
+    <string name="period_notification_text">Manana es un dia de la menstruacion</string>
+    <string name="period_length_label">Periodo</string>
+    <string name="period_notification_title">Dia de la menstruacion</string>
+    <string name="pick_last_period_date">Establecer la fecha del ultimo periodo</string>
+    <string name="update_preferences">Actualizar</string>
+</resources>

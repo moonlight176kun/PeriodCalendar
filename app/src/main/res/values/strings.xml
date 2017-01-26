@@ -16,6 +16,6 @@
     <string name="ovulation_notification_text">Tomorrow is ovulation day</string>
     <string name="fertile_notification_title">Fertile day!</string>
     <string name="fertile_notification_text">Tomorrow is fertile day</string>
-    <string name="period_notification_title">Period day!</string>
-    <string name="period_notification_text">Tomorrow is a period day</string>
+    <string name="period_notification_title">Menstruation day!</string>
+    <string name="period_notification_text">Tomorrow is a menstruation day</string>
 </resources>

@@ -135,48 +135,67 @@
                 android:width="0dp" />
         </LinearLayout>
 
-        <Switch
-            android:text="@string/incoming_period_notification_label"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="14dp"
-            android:layout_marginTop="32dp"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/incoming_period_notification" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <Switch
-            android:text="@string/fertile_days_notification_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="14dp"
-            android:layout_marginTop="32dp"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/fertile_days_notification" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/update_preferences"
+                    android:onClick="updatePreferences"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"/>
 
-        <Switch
-            android:text="@string/ovulation_notification_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="14dp"
-            android:layout_marginTop="32dp"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/ovulation_notification" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/clear_calendar"
+                    android:onClick="clearPeriodCalendar"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/update_preferences"
-            android:onClick="updatePreferences"
-            android:layout_gravity="center"
-            android:layout_weight="1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <Switch
+                    android:text="@string/incoming_period_notification_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/incoming_period_notification" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/clear_calendar"
-            android:onClick="clearPeriodCalendar"
-            android:layout_gravity="center"
-            android:layout_weight="1"/>
+                <Switch
+                    android:text="@string/fertile_days_notification_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/fertile_days_notification" />
+
+                <Switch
+                    android:text="@string/ovulation_notification_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/ovulation_notification" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

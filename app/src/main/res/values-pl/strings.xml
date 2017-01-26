@@ -2,11 +2,21 @@
 <resources>
     <string name="app_name">Kalendarz miesiączkowy</string>
     <string name="menstruation_length_label">Długość menstruacji</string>
-    <string name="last_period_date_label">Last period date</string>
-    <string name="pick_last_period_date">Set last period date</string>
-    <string name="incoming_period_notification_label">Incoming period notification</string>
-    <string name="fertile_days_notification_label">Fertile days notification</string>
-    <string name="ovulation_notification_label">Ovulation notification</string>
-    <string name="update_preferences">Update</string>
-    <string name="go_to_preferences">Preferences</string>
+    <string name="last_period_date_label">Ostatnia data miesiączki</string>
+    <string name="pick_last_period_date">Ustaw ostatnią datę miesiączki</string>
+    <string name="incoming_period_notification_label">Przychodzące powiadomienie cyklu</string>
+    <string name="fertile_days_notification_label">Powiadomienie dni płodnych</string>
+    <string name="ovulation_notification_label">Powiadomienie owulacji</string>
+    <string name="update_preferences">Aktualizuj</string>
+    <string name="go_to_preferences">Ustawienia</string>
+    <string name="clear_calendar">Wyczyść kalendarz</string>
+    <string name="fertile_notification_text">Jutro zaczynają się dni płodne</string>
+    <string name="fertile_notification_title">Dni płodne!</string>
+    <string name="ovulation_notification_text">Jutro przewidywany dzień owulacji</string>
+    <string name="ovulation_notification_title">Dzień owulacji</string>
+    <string name="period_length_label">Długość cyklu</string>
+    <string name="period_notification_text">Jutro początek miesiączki</string>
+    <string name="button_minus_label">-</string>
+    <string name="button_plus_label">+</string>
+    <string name="period_notification_title">Dzień miesiączki</string>
 </resources>
