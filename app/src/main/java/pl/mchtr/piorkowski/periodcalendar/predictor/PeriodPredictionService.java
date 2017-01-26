@@ -49,6 +49,7 @@ public class PeriodPredictionService extends IntentService {
                 case ACTION_SCHEDULED_RECALCULATION:
                     Log.i(TAG, "Scheduled recalculation!");
                     periodCalculator.calculate();
+                    checkStatusAndSendNotifications();
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown action name :\"" + action + "\"");
@@ -58,26 +59,30 @@ public class PeriodPredictionService extends IntentService {
 
     private void checkStatusAndSendNotifications() {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        LocalDate now = new LocalDate();
-        Set<LocalDate> period = periodDaysManager.getHistoricPeriodDays();
+        LocalDate theNextDay = (new LocalDate()).plusDays(1);
 
-        if (period.contains(now)) {
-            sendPeriodNotification(notificationManager);
-            // send period day notification
+        if (periodDaysManager.sendPeriodNotification()) {
+            Set<LocalDate> period = periodDaysManager.getHistoricPeriodDays();
+
+            if (period.contains(theNextDay)) {
+                sendPeriodNotification(notificationManager);
+            }
         }
 
-        Set<LocalDate> fertile = periodDaysManager.getHistoricFertileDays();
+        if (periodDaysManager.sendFertileNotification()) {
+            Set<LocalDate> fertile = periodDaysManager.getHistoricFertileDays();
 
-        if (fertile.contains(now)) {
-            sendFertileNotification(notificationManager);
-            // send fertile days notification
+            if (fertile.contains(theNextDay)) {
+                sendFertileNotification(notificationManager);
+            }
         }
 
-        Set<LocalDate> ovulation = periodDaysManager.getHistoricOvulationDays();
+        if (periodDaysManager.sendOvulationNotification()) {
+            Set<LocalDate> ovulation = periodDaysManager.getHistoricOvulationDays();
 
-        if (ovulation.contains(now)) {
-            sendOvulationNotification(notificationManager);
-            // send ovulation days notification
+            if (ovulation.contains(theNextDay)) {
+                sendOvulationNotification(notificationManager);
+            }
         }
     }
 

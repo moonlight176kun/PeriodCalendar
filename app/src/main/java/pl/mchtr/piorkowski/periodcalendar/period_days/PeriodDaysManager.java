@@ -136,4 +136,16 @@ public class PeriodDaysManager {
         editor.putString(AppPreferences.LAST_PERIOD_DATE_KEY, stringDate);
         editor.commit();
     }
+
+    public boolean sendPeriodNotification() {
+        return getPreferences().getBoolean(AppPreferences.INCOMING_PERIOD_NOTIFICATION_KEY, false);
+    }
+
+    public boolean sendFertileNotification() {
+        return getPreferences().getBoolean(AppPreferences.FERTILE_DAYS_NOTIFICATION_KEY, false);
+    }
+
+    public boolean sendOvulationNotification() {
+        return getPreferences().getBoolean(AppPreferences.OVULATION_NOTIFICATION_KEY, false);
+    }
 }
